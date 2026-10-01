@@ -1,0 +1,1193 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HACK·FORMAT · نظام اختراق و فرمته الهواتف</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <style>
+        /* ===== RESET ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Cairo:wght@400;700&display=swap');
+
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #111;
+            --bg-card: #0d0d0d;
+            --neon-green: #00ff41;
+            --neon-red: #ff003c;
+            --neon-blue: #0088ff;
+            --neon-purple: #a855f7;
+            --text-main: #c0c0c0;
+            --text-bright: #f0f0f0;
+            --border-glow: #00ff4180;
+            --shadow-neon: 0 0 30px #00ff4133;
+            --font-hack: 'Orbitron', monospace;
+            --font-ar: 'Cairo', sans-serif;
+        }
+
+        body {
+            background: var(--bg-primary);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            font-family: var(--font-ar);
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* ===== MATRIX RAIN BACKGROUND ===== */
+        #matrix-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.08;
+        }
+
+        /* ===== SCANLINE OVERLAY ===== */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+            background: repeating-linear-gradient(0deg,
+                    transparent 0px,
+                    transparent 3px,
+                    rgba(0, 255, 65, 0.02) 3px,
+                    rgba(0, 255, 65, 0.02) 4px);
+            animation: scanlines 8s linear infinite;
+        }
+
+        @keyframes scanlines {
+            0% {
+                background-position: 0 0;
+            }
+            100% {
+                background-position: 0 100%;
+            }
+        }
+
+        /* ===== GLITCH OVERLAY ===== */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+            background: radial-gradient(ellipse at center, transparent 60%, rgba(0, 255, 65, 0.03) 100%);
+            animation: glitchFlicker 0.3s infinite alternate;
+        }
+
+        @keyframes glitchFlicker {
+            0% {
+                opacity: 0.3;
+            }
+            100% {
+                opacity: 0.8;
+            }
+        }
+
+        /* ===== CONTAINER ===== */
+        .container {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            max-width: 880px;
+            background: var(--bg-secondary);
+            border: 1px solid #00ff4122;
+            border-radius: 24px;
+            padding: 0;
+            box-shadow: 0 0 60px #00ff4115, inset 0 0 60px #00ff4105;
+            backdrop-filter: blur(4px);
+            overflow: hidden;
+        }
+
+        /* ===== TOP DECORATIVE BAR ===== */
+        .top-bar {
+            background: #000;
+            padding: 10px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #00ff4133;
+            font-family: var(--font-hack);
+            font-size: 12px;
+            color: var(--neon-green);
+            letter-spacing: 2px;
+        }
+        .top-bar .dots span {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-left: 6px;
+        }
+        .top-bar .dots .red {
+            background: #ff0055;
+            box-shadow: 0 0 12px #ff0055;
+        }
+        .top-bar .dots .yellow {
+            background: #ffaa00;
+            box-shadow: 0 0 12px #ffaa00;
+        }
+        .top-bar .dots .green {
+            background: #00ff41;
+            box-shadow: 0 0 12px #00ff41;
+        }
+        .top-bar .status {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .top-bar .status .blink {
+            animation: blink 1s step-end infinite;
+        }
+        @keyframes blink {
+            0%,
+            100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0;
+            }
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            padding: 30px 30px 20px;
+            text-align: center;
+            border-bottom: 1px solid #00ff4115;
+            position: relative;
+        }
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 10%;
+            width: 80%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--neon-green), transparent);
+            opacity: 0.3;
+        }
+        .header .glitch-title {
+            font-family: var(--font-hack);
+            font-size: 28px;
+            font-weight: 900;
+            color: var(--neon-green);
+            text-shadow: 0 0 20px #00ff4166, 0 0 60px #00ff4133;
+            letter-spacing: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+        .header .glitch-title i {
+            font-size: 32px;
+            color: var(--neon-red);
+            text-shadow: 0 0 30px #ff003c66;
+            animation: pulseRed 1.5s ease-in-out infinite alternate;
+        }
+        @keyframes pulseRed {
+            0% {
+                text-shadow: 0 0 20px #ff003c44;
+            }
+            100% {
+                text-shadow: 0 0 60px #ff003c, 0 0 120px #ff003c55;
+            }
+        }
+        .header .sub {
+            font-family: var(--font-ar);
+            color: var(--text-main);
+            font-size: 15px;
+            margin-top: 12px;
+            letter-spacing: 1px;
+            opacity: 0.8;
+        }
+        .header .sub span {
+            color: var(--neon-green);
+            font-weight: 700;
+        }
+
+        /* ===== CONTENT ===== */
+        .content {
+            padding: 28px 30px 30px;
+        }
+
+        /* ===== WARNING SECTION ===== */
+        .warning-section {
+            background: #1a0000;
+            border: 1px solid #ff003c55;
+            border-radius: 16px;
+            padding: 20px 24px;
+            margin-bottom: 28px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 40px #ff003c11;
+        }
+        .warning-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: repeating-linear-gradient(45deg,
+                    transparent,
+                    transparent 20px,
+                    rgba(255, 0, 60, 0.02) 20px,
+                    rgba(255, 0, 60, 0.02) 21px);
+            animation: warningBg 20s linear infinite;
+        }
+        @keyframes warningBg {
+            0% {
+                transform: translate(0, 0);
+            }
+            100% {
+                transform: translate(30px, 30px);
+            }
+        }
+        .warning-section h3 {
+            color: var(--neon-red);
+            font-family: var(--font-hack);
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 14px;
+            position: relative;
+            z-index: 2;
+            text-shadow: 0 0 30px #ff003c55;
+        }
+        .warning-section h3 i {
+            animation: pulseRed 1.2s ease-in-out infinite alternate;
+        }
+        .warning-list {
+            list-style: none;
+            padding: 0;
+            position: relative;
+            z-index: 2;
+        }
+        .warning-list li {
+            color: #dddddd;
+            padding: 6px 0 6px 30px;
+            position: relative;
+            line-height: 1.7;
+            font-size: 14px;
+        }
+        .warning-list li::before {
+            content: '⚠';
+            position: absolute;
+            right: 0;
+            color: var(--neon-red);
+            font-size: 14px;
+            animation: pulseRed 1.8s ease-in-out infinite alternate;
+        }
+
+        /* ===== PHONE INPUT ===== */
+        .phone-input-section {
+            margin-bottom: 28px;
+        }
+        .phone-input-section h3 {
+            color: var(--neon-green);
+            font-family: var(--font-hack);
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 8px;
+            text-shadow: 0 0 20px #00ff4133;
+        }
+        .phone-input-section .desc {
+            color: var(--text-main);
+            font-size: 14px;
+            margin-bottom: 18px;
+            opacity: 0.7;
+        }
+        .phone-input-container {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+        .phone-input-container .country-select {
+            flex: 0 0 180px;
+            padding: 14px 16px;
+            background: #0a0a0a;
+            border: 1px solid #00ff4133;
+            border-radius: 12px;
+            color: var(--neon-green);
+            font-family: var(--font-hack);
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+            outline: none;
+        }
+        .phone-input-container .country-select:hover,
+        .phone-input-container .country-select:focus {
+            border-color: var(--neon-green);
+            box-shadow: 0 0 30px #00ff4122;
+        }
+        .phone-input-container .country-select option {
+            background: #111;
+            color: #ccc;
+        }
+        .phone-input-container .phone-input {
+            flex: 1;
+            min-width: 180px;
+            padding: 14px 18px;
+            background: #0a0a0a;
+            border: 1px solid #00ff4133;
+            border-radius: 12px;
+            color: var(--text-bright);
+            font-size: 18px;
+            font-family: var(--font-hack);
+            letter-spacing: 1px;
+            transition: 0.3s;
+            outline: none;
+            direction: ltr;
+            text-align: right;
+        }
+        .phone-input-container .phone-input::placeholder {
+            color: #555;
+            font-size: 14px;
+            font-family: var(--font-ar);
+            letter-spacing: 0;
+        }
+        .phone-input-container .phone-input:focus {
+            border-color: var(--neon-green);
+            box-shadow: 0 0 40px #00ff4122, inset 0 0 40px #00ff4105;
+        }
+        .phone-input-container .phone-input.error {
+            border-color: var(--neon-red);
+            box-shadow: 0 0 40px #ff003c33;
+        }
+        .phone-input-container .phone-input.valid {
+            border-color: var(--neon-green);
+            box-shadow: 0 0 40px #00ff4133;
+        }
+
+        /* ===== BUTTONS ===== */
+        .btn-hack {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 16px 28px;
+            border: none;
+            border-radius: 12px;
+            font-family: var(--font-hack);
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-hack::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.05) 0%, transparent 60%);
+            opacity: 0;
+            transition: 0.5s;
+        }
+        .btn-hack:hover::after {
+            opacity: 1;
+        }
+        .btn-hack:active {
+            transform: scale(0.97);
+        }
+
+        .btn-hack.green {
+            background: linear-gradient(135deg, #00aa33, #00ff41);
+            color: #000;
+            text-shadow: 0 0 10px #00ff4188;
+            box-shadow: 0 0 40px #00ff4133;
+        }
+        .btn-hack.green:hover {
+            box-shadow: 0 0 70px #00ff4166;
+            transform: translateY(-2px);
+        }
+        .btn-hack.green:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .btn-hack.red {
+            background: linear-gradient(135deg, #aa0033, #ff003c);
+            color: #fff;
+            text-shadow: 0 0 10px #ff003c88;
+            box-shadow: 0 0 40px #ff003c33;
+            display: none;
+        }
+        .btn-hack.red:hover {
+            box-shadow: 0 0 70px #ff003c66;
+            transform: translateY(-2px);
+        }
+
+        .btn-hack.purple {
+            background: linear-gradient(135deg, #6d28d9, #a855f7);
+            color: #fff;
+            text-shadow: 0 0 10px #a855f788;
+            box-shadow: 0 0 40px #a855f733;
+        }
+        .btn-hack.purple:hover {
+            box-shadow: 0 0 70px #a855f766;
+            transform: translateY(-2px);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+            margin-top: 6px;
+        }
+        .btn-group .btn-hack {
+            flex: 1;
+            min-width: 140px;
+        }
+
+        /* ===== INFO SECTION ===== */
+        .info-section {
+            margin-top: 30px;
+            padding: 24px;
+            background: #0a0a0a;
+            border: 1px solid #00ff4122;
+            border-radius: 16px;
+            display: none;
+            animation: fadeInUp 0.6s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .info-section.active {
+            display: block;
+        }
+        .info-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at 30% 20%, #00ff4105, transparent 70%);
+            pointer-events: none;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .info-section h3 {
+            color: var(--neon-green);
+            font-family: var(--font-hack);
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid #00ff4122;
+            padding-bottom: 14px;
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px #00ff4133;
+        }
+        .info-section h3 i {
+            animation: pulseGreen 2s ease-in-out infinite alternate;
+        }
+        @keyframes pulseGreen {
+            0% {
+                text-shadow: 0 0 10px #00ff4144;
+            }
+            100% {
+                text-shadow: 0 0 40px #00ff41, 0 0 80px #00ff4133;
+            }
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 14px;
+            position: relative;
+            z-index: 2;
+        }
+        .info-item {
+            background: #0d0d0d;
+            padding: 14px 16px;
+            border-radius: 10px;
+            border-right: 3px solid var(--neon-green);
+            box-shadow: 0 0 20px #00ff4105;
+            transition: 0.3s;
+        }
+        .info-item:hover {
+            border-right-color: var(--neon-red);
+            box-shadow: 0 0 30px #00ff4111;
+        }
+        .info-label {
+            color: #888;
+            font-size: 12px;
+            font-family: var(--font-hack);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+        .info-value {
+            color: var(--text-bright);
+            font-size: 15px;
+            font-weight: 700;
+            font-family: var(--font-ar);
+        }
+        .info-value .highlight {
+            color: var(--neon-green);
+        }
+        .info-value .danger {
+            color: var(--neon-red);
+        }
+
+        /* ===== PROGRESS ===== */
+        .progress-container {
+            margin-top: 28px;
+            display: none;
+            animation: fadeInUp 0.6s ease;
+        }
+        .progress-container.active {
+            display: block;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            color: var(--text-main);
+            font-family: var(--font-hack);
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+        .progress-header span:last-child {
+            color: var(--neon-green);
+            font-weight: 700;
+        }
+        .progress-bar {
+            height: 6px;
+            background: #1a1a1a;
+            border-radius: 4px;
+            overflow: hidden;
+            border: 1px solid #00ff4122;
+        }
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #00ff41, #00ff41);
+            box-shadow: 0 0 30px #00ff4166;
+            transition: width 0.3s ease;
+        }
+
+        .progress-steps {
+            margin-top: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .step {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            opacity: 0.35;
+            transition: 0.4s;
+            padding: 8px 14px;
+            border-radius: 10px;
+            background: #0a0a0a;
+            border: 1px solid transparent;
+        }
+        .step.active {
+            opacity: 1;
+            border-color: #00ff4133;
+            background: #00ff4105;
+        }
+        .step.completed {
+            opacity: 0.8;
+            border-color: #00ff4144;
+        }
+        .step .step-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #1a1a1a;
+            color: #555;
+            font-family: var(--font-hack);
+            font-size: 14px;
+            font-weight: 700;
+            flex-shrink: 0;
+            border: 1px solid #333;
+            transition: 0.4s;
+        }
+        .step.active .step-icon {
+            background: #00ff4122;
+            border-color: var(--neon-green);
+            color: var(--neon-green);
+            box-shadow: 0 0 30px #00ff4133;
+        }
+        .step.completed .step-icon {
+            background: #00ff4122;
+            border-color: var(--neon-green);
+            color: var(--neon-green);
+        }
+        .step .step-info h4 {
+            color: var(--text-bright);
+            font-size: 15px;
+            font-family: var(--font-ar);
+        }
+        .step .step-info p {
+            color: #888;
+            font-size: 13px;
+        }
+
+        /* ===== SUCCESS MESSAGE ===== */
+        .success-box {
+            margin-top: 28px;
+            padding: 30px 24px;
+            background: #0a0a0a;
+            border: 1px solid #00ff4166;
+            border-radius: 16px;
+            text-align: center;
+            animation: fadeInUp 0.6s ease;
+            box-shadow: 0 0 60px #00ff4122;
+        }
+        .success-box .icon {
+            font-size: 72px;
+            color: var(--neon-green);
+            text-shadow: 0 0 60px #00ff4166;
+            margin-bottom: 16px;
+        }
+        .success-box h3 {
+            color: var(--neon-green);
+            font-family: var(--font-hack);
+            font-size: 22px;
+            margin-bottom: 12px;
+            text-shadow: 0 0 30px #00ff4133;
+        }
+        .success-box p {
+            color: var(--text-main);
+            line-height: 1.8;
+            font-size: 15px;
+        }
+        .success-box p strong {
+            color: var(--neon-green);
+            font-family: var(--font-hack);
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            padding: 18px 30px;
+            border-top: 1px solid #00ff4115;
+            text-align: center;
+            font-size: 13px;
+            color: #555;
+            font-family: var(--font-hack);
+            letter-spacing: 1px;
+            background: #00000033;
+        }
+        .footer a {
+            color: var(--neon-green);
+            text-decoration: none;
+            transition: 0.3s;
+        }
+        .footer a:hover {
+            text-shadow: 0 0 20px #00ff4166;
+        }
+        .footer .blink {
+            animation: blink 1.2s step-end infinite;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .container {
+                border-radius: 16px;
+            }
+            .header .glitch-title {
+                font-size: 20px;
+                gap: 10px;
+            }
+            .header .glitch-title i {
+                font-size: 24px;
+            }
+            .content {
+                padding: 18px 16px 24px;
+            }
+            .phone-input-container {
+                flex-direction: column;
+            }
+            .phone-input-container .country-select {
+                flex: 1;
+                width: 100%;
+            }
+            .phone-input-container .phone-input {
+                width: 100%;
+                font-size: 16px;
+            }
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+            .btn-group {
+                flex-direction: column;
+            }
+            .btn-group .btn-hack {
+                min-width: unset;
+            }
+            .top-bar {
+                font-size: 10px;
+                padding: 8px 16px;
+                flex-wrap: wrap;
+                gap: 6px;
+            }
+            .top-bar .status {
+                font-size: 10px;
+            }
+            .warning-section {
+                padding: 16px;
+            }
+            .warning-list li {
+                font-size: 13px;
+            }
+            .header {
+                padding: 20px 16px 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header .glitch-title {
+                font-size: 17px;
+                letter-spacing: 1px;
+            }
+            .header .sub {
+                font-size: 13px;
+            }
+            .btn-hack {
+                font-size: 13px;
+                padding: 14px 18px;
+            }
+            .info-item {
+                padding: 12px 14px;
+            }
+            .info-value {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== MATRIX CANVAS ===== -->
+    <canvas id="matrix-bg"></canvas>
+
+    <!-- ===== CONTAINER ===== -->
+    <div class="container">
+
+        <!-- TOP BAR -->
+        <div class="top-bar">
+            <div class="dots">
+                <span class="red"></span>
+                <span class="yellow"></span>
+                <span class="green"></span>
+            </div>
+            <div class="status">
+                <i class="fas fa-circle" style="color:#00ff41;font-size:10px;"></i>
+                <span class="blink">● SYSTEM ACTIVE</span>
+                <span style="color:#555;">|</span>
+                <span>v.3.7.1</span>
+            </div>
+            <div style="color:#555;font-size:10px;">ROOT·ACCESS</div>
+        </div>
+
+        <!-- HEADER -->
+        <div class="header">
+            <div class="glitch-title">
+                <i class="fas fa-skull"></i>
+                <span>HACK·FORMAT</span>
+                <i class="fas fa-terminal"></i>
+            </div>
+            <div class="sub">
+                <i class="fas fa-radiation" style="color:#ff003c;margin-left:8px;"></i>
+                نظام اختراق و فرمته الأجهزة · <span>الدول العربية</span>
+            </div>
+        </div>
+
+        <!-- CONTENT -->
+        <div class="content">
+
+            <!-- WARNING -->
+            <div class="warning-section">
+                <h3><i class="fas fa-exclamation-triangle"></i> تحذير اختراق</h3>
+                <ul class="warning-list">
+                    <li>هذه الأداة تمنحك صلاحيات <strong style="color:#ff003c;">ROOT</strong> لفرمته الجهاز بالكامل.</li>
+                    <li>جميع البيانات الشخصية، الملفات، والتطبيقات <strong style="color:#ff003c;">تُحذف نهائياً</strong>.</li>
+                    <li>يتطلب اتصال إنترنت نشط لتنفيذ الهجوم <span style="color:#00ff41;">(exploit)</span>.</li>
+                    <li><strong style="color:#ff003c;">لا يمكن التراجع</strong> — تأكد من نسخ احتياطي قبل المتابعة.</li>
+                </ul>
+            </div>
+
+            <!-- PHONE INPUT -->
+            <div class="phone-input-section">
+                <h3><i class="fas fa-phone-alt"></i> استهداف الرقم</h3>
+                <p class="desc">اختر الدولة وأدخل الرقم المستهدف لاستخراج معلوماته وبدء عملية الاختراق.</p>
+
+                <div class="phone-input-container">
+                    <select class="country-select" id="countryCode">
+                        <option value="+967">+967 اليمن</option>
+                        <option value="+966">+966 السعودية</option>
+                        <option value="+971">+971 الإمارات</option>
+                        <option value="+973">+973 البحرين</option>
+                        <option value="+974">+974 قطر</option>
+                        <option value="+968">+968 عمان</option>
+                        <option value="+965">+965 الكويت</option>
+                        <option value="+20">+20 مصر</option>
+                        <option value="+213">+213 الجزائر</option>
+                        <option value="+212">+212 المغرب</option>
+                        <option value="+216">+216 تونس</option>
+                        <option value="+218">+218 ليبيا</option>
+                        <option value="+249">+249 السودان</option>
+                        <option value="+962">+962 الأردن</option>
+                        <option value="+963">+963 سوريا</option>
+                        <option value="+961">+961 لبنان</option>
+                        <option value="+964">+964 العراق</option>
+                        <option value="+970">+970 فلسطين</option>
+                        <option value="+253">+253 جيبوتي</option>
+                        <option value="+252">+252 الصومال</option>
+                        <option value="+222">+222 موريتانيا</option>
+                    </select>
+                    <input type="tel" class="phone-input" id="phoneNumber" placeholder="أدخل الرقم المستهدف" maxlength="15" dir="ltr">
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn-hack green" id="getInfoBtn">
+                        <i class="fas fa-search"></i> استخراج المعلومات
+                    </button>
+                    <button class="btn-hack red" id="resetBtn">
+                        <i class="fas fa-skull-crossbones"></i> تنفيذ الفرمتة
+                    </button>
+                </div>
+            </div>
+
+            <!-- INFO SECTION -->
+            <div class="info-section" id="infoSection">
+                <h3><i class="fas fa-database"></i> معلومات الهدف</h3>
+                <div class="info-grid" id="infoGrid"></div>
+            </div>
+
+            <!-- PROGRESS -->
+            <div class="progress-container" id="progressContainer">
+                <div class="progress-header">
+                    <span><i class="fas fa-spinner fa-pulse"></i> تنفيذ الهجوم</span>
+                    <span id="progressPercentage">0%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="progress-steps">
+                    <div class="step completed" id="step1">
+                        <div class="step-icon"><i class="fas fa-check"></i></div>
+                        <div class="step-info"><h4>اختراق الرقم</h4><p>تم كسر التشفير واختراق الهدف</p></div>
+                    </div>
+                    <div class="step" id="step2">
+                        <div class="step-icon">2</div>
+                        <div class="step-info"><h4>نسخ البيانات احتياطياً</h4><p>استخراج الملفات الحساسة</p></div>
+                    </div>
+                    <div class="step" id="step3">
+                        <div class="step-icon">3</div>
+                        <div class="step-info"><h4>تدمير البيانات</h4><p>حذف التطبيقات والملفات الشخصية</p></div>
+                    </div>
+                    <div class="step" id="step4">
+                        <div class="step-icon">4</div>
+                        <div class="step-info"><h4>إعادة ضبط المصنع</h4><p>فرض إعدادات المصنع على الجهاز</p></div>
+                    </div>
+                    <div class="step" id="step5">
+                        <div class="step-icon">5</div>
+                        <div class="step-info"><h4>إعادة التشغيل القسري</h4><p>الجهاز يعيد التشغيل بالنظام النظيف</p></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- FOOTER -->
+        <div class="footer">
+            <span class="blink">⟡</span> HACK·FORMAT v3.7 · <span style="color:#00ff41;">ROOT</span> ACCESS GRANTED · <span class="blink">⟡</span>
+            <br style="display:none;" />
+            <span style="font-size:11px;color:#444;display:block;margin-top:4px;">
+                <i class="fas fa-shield-alt" style="color:#ff003c;"></i> جميع الحقوق محفوظة © 2026 · <a href="#">الدعم الفني</a>
+            </span>
+        </div>
+    </div>
+
+    <script>
+        // ============================================================
+        //  MATRIX RAIN (Canvas)
+        // ============================================================
+        (function matrixRain() {
+            const canvas = document.getElementById('matrix-bg');
+            const ctx = canvas.getContext('2d');
+            let w, h, columns, drops;
+
+            function resize() {
+                w = canvas.width = window.innerWidth;
+                h = canvas.height = window.innerHeight;
+                columns = Math.floor(w / 20);
+                drops = Array(columns).fill(1);
+            }
+            window.addEventListener('resize', resize);
+            resize();
+
+            const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()_+{}:<>?';
+
+            function draw() {
+                ctx.fillStyle = 'rgba(10, 10, 10, 0.05)';
+                ctx.fillRect(0, 0, w, h);
+                ctx.font = '16px monospace';
+                for (let i = 0; i < drops.length; i++) {
+                    const ch = chars[Math.floor(Math.random() * chars.length)];
+                    const x = i * 20;
+                    const y = drops[i] * 20;
+                    ctx.fillStyle = `rgba(0, 255, 65, ${0.2 + Math.random() * 0.3})`;
+                    ctx.fillText(ch, x, y);
+                    if (y > h && Math.random() > 0.975) drops[i] = 0;
+                    drops[i]++;
+                }
+                requestAnimationFrame(draw);
+            }
+            draw();
+        })();
+
+        // ============================================================
+        //  APPLICATION LOGIC (المشغل، صاحب الرقم، الرصيد، الجهاز تم إخفاؤهم)
+        // ============================================================
+        document.addEventListener('DOMContentLoaded', function() {
+            const countrySelect = document.getElementById('countryCode');
+            const phoneInput = document.getElementById('phoneNumber');
+            const getInfoBtn = document.getElementById('getInfoBtn');
+            const resetBtn = document.getElementById('resetBtn');
+            const infoSection = document.getElementById('infoSection');
+            const infoGrid = document.getElementById('infoGrid');
+            const progressContainer = document.getElementById('progressContainer');
+            const progressFill = document.getElementById('progressFill');
+            const progressPercentage = document.getElementById('progressPercentage');
+
+            // === DATA ===
+            const arabCountriesData = {
+                "+967": { name: "اليمن", operators: ["يمن موبايل", "سبأفون", "MTN"], format: "7XXXXXXXX" },
+                "+966": { name: "السعودية", operators: ["STC", "موبايلي", "زين"], format: "5XXXXXXXX" },
+                "+971": { name: "الإمارات", operators: ["اتصالات", "دو", "ڤودافون"], format: "5XXXXXXXX" },
+                "+973": { name: "البحرين", operators: ["بتلكو", "زين", "STC"], format: "3XXXXXXX" },
+                "+974": { name: "قطر", operators: ["أوريدو", "ڤودافون"], format: "3XXXXXXX" },
+                "+968": { name: "عمان", operators: ["عمانتل", "أوريدو"], format: "9XXXXXXX" },
+                "+965": { name: "الكويت", operators: ["زين", "أوريدو", "STC"], format: "5XXXXXXX" },
+                "+20": { name: "مصر", operators: ["فودافون", "اورانج", "اتصالات", "وي"], format: "1XXXXXXXXX" },
+                "+213": { name: "الجزائر", operators: ["موريتل", "جازي", "أوريدو"], format: "5XXXXXXX" },
+                "+212": { name: "المغرب", operators: ["اتصالات المغرب", "اورانج", "إنوي"], format: "6XXXXXXX" },
+                "+216": { name: "تونس", operators: ["اورانج", "توبنيت", "أوريدو"], format: "2XXXXXXX" },
+                "+218": { name: "ليبيا", operators: ["ليبيا للاتصالات", "المدار"], format: "9XXXXXXX" },
+                "+249": { name: "السودان", operators: ["زين", "MTN", "سوداني"], format: "9XXXXXXX" },
+                "+962": { name: "الأردن", operators: ["زين", "أورانج", "أم تي إن"], format: "7XXXXXXX" },
+                "+963": { name: "سوريا", operators: ["سيرياتيل", "إم تي إن"], format: "9XXXXXXX" },
+                "+961": { name: "لبنان", operators: ["ألفا", "تاتش"], format: "3XXXXXX" },
+                "+964": { name: "العراق", operators: ["زين", "كورك", "اسيا سيل"], format: "7XXXXXXXX" },
+                "+970": { name: "فلسطين", operators: ["جوال", "اتصالات"], format: "5XXXXXXX" },
+                "+253": { name: "جيبوتي", operators: ["إيفل"], format: "7XXXXXX" },
+                "+252": { name: "الصومال", operators: ["تليسنور", "سومالي نت"], format: "6XXXXXXX" },
+                "+222": { name: "موريتانيا", operators: ["موريتل", "ماتل"], format: "2XXXXXX" }
+            };
+
+            // === HELPERS ===
+            function getRandomRegion(country) {
+                const map = {
+                    "السعودية": ["الرياض", "جدة", "الدمام", "مكة", "المدينة"],
+                    "الإمارات": ["دبي", "أبوظبي", "الشارقة", "عجمان", "العين"],
+                    "مصر": ["القاهرة", "الإسكندرية", "الجيزة", "بورسعيد", "الأقصر"],
+                    "الجزائر": ["الجزائر", "وهران", "قسنطينة", "عنابة", "باتنة"],
+                    "المغرب": ["الدار البيضاء", "الرباط", "فاس", "مراكش", "طنجة"],
+                    "تونس": ["تونس", "صفاقس", "سوسة", "قابس", "بنزرت"],
+                    "العراق": ["بغداد", "البصرة", "الموصل", "أربيل", "النجف"],
+                    "الأردن": ["عمان", "إربد", "الزرقاء", "العقبة", "مادبا"],
+                    "سوريا": ["دمشق", "حلب", "حمص", "اللاذقية", "حماة"],
+                    "لبنان": ["بيروت", "طرابلس", "صيدا", "زحلة", "بعلبك"],
+                    "اليمن": ["صنعاء", "عدن", "تعز", "الحديدة", "حضرموت"]
+                };
+                return (map[country] || ["غير محدد"])[Math.floor(Math.random() * (map[country] || ["غير محدد"]).length)];
+            }
+
+            function validatePhone() {
+                const val = phoneInput.value.trim();
+                if (!val || !/^\d+$/.test(val) || val.length < 6) {
+                    phoneInput.className = 'phone-input error';
+                    getInfoBtn.disabled = true;
+                    return false;
+                }
+                phoneInput.className = 'phone-input valid';
+                getInfoBtn.disabled = false;
+                return true;
+            }
+
+            // === EVENTS ===
+            countrySelect.addEventListener('change', function() {
+                const code = this.value;
+                const data = arabCountriesData[code];
+                if (data) phoneInput.placeholder = `مثال: ${data.format}`;
+                validatePhone();
+            });
+
+            phoneInput.addEventListener('input', validatePhone);
+            validatePhone();
+
+            // === GET INFO (تم إخفاء: المشغل، صاحب الرقم، الرصيد، الجهاز) ===
+            getInfoBtn.addEventListener('click', function() {
+                if (!validatePhone()) {
+                    alert('⚠ الرجاء إدخال رقم هاتف صحيح.');
+                    return;
+                }
+
+                const code = countrySelect.value;
+                const number = phoneInput.value.trim();
+                const country = arabCountriesData[code];
+                if (!country) return;
+
+                const status = Math.random() > 0.3 ? 'نشط' : 'معطل';
+                const region = getRandomRegion(country.name);
+                const imei = `35${Math.floor(Math.random() * 10000000000000).toString().padStart(13, '0')}`;
+                const os = Math.random() > 0.5 ? 'Android 14' : 'iOS 17';
+                const lastActive = `قبل ${Math.floor(Math.random() * 48 + 1)} ساعة`;
+                const activated = `202${Math.floor(Math.random() * 3)}-${String(Math.floor(Math.random() * 12) + 1).padStart(2, '0')}-${String(Math.floor(Math.random() * 28) + 1).padStart(2, '0')}`;
+
+                // ===== تم حذف الحقول: المشغل، صاحب الرقم، الرصيد، الجهاز =====
+                infoGrid.innerHTML = `
+                        <div class="info-item"><div class="info-label">الرقم الكامل</div><div class="info-value">${code} ${number}</div></div>
+                        <div class="info-item"><div class="info-label">الدولة</div><div class="info-value">${country.name}</div></div>
+                        <div class="info-item"><div class="info-label">المنطقة</div><div class="info-value">${region}</div></div>
+                        <div class="info-item"><div class="info-label">الحالة</div><div class="info-value ${status === 'نشط' ? 'highlight' : 'danger'}">${status}</div></div>
+                        <div class="info-item"><div class="info-label">IMEI</div><div class="info-value" style="font-family:monospace;font-size:14px;">${imei}</div></div>
+                        <div class="info-item"><div class="info-label">نظام التشغيل</div><div class="info-value">${os}</div></div>
+                        <div class="info-item"><div class="info-label">آخر نشاط</div><div class="info-value">${lastActive}</div></div>
+                        <div class="info-item"><div class="info-label">تاريخ التفعيل</div><div class="info-value">${activated}</div></div>
+                        <div class="info-item" style="border-right-color:#ff003c;"><div class="info-label">حالة الفرمتة</div><div class="info-value danger">⏳ جاهز للتنفيذ</div></div>
+                    `;
+
+                infoSection.classList.add('active');
+                resetBtn.style.display = 'flex';
+                setTimeout(() => infoSection.scrollIntoView({ behavior: 'smooth', block: 'center' }), 200);
+            });
+
+            // === RESET (FORMAT) ===
+            resetBtn.addEventListener('click', function() {
+                const code = countrySelect.value;
+                const number = phoneInput.value.trim();
+                if (!confirm(`⚠️ هل أنت متأكد من تنفيذ الفرمتة الشاملة للجهاز المرتبط بالرقم ${code} ${number}؟\nهذه العملية لا يمكن التراجع عنها.`)) {
+                    return;
+                }
+
+                resetBtn.style.display = 'none';
+                getInfoBtn.style.display = 'none';
+                progressContainer.classList.add('active');
+                startResetProcess();
+            });
+
+            // === RESET PROCESS ===
+            function startResetProcess() {
+                let progress = 0;
+                let currentStep = 1;
+                const steps = ['step1', 'step2', 'step3', 'step4', 'step5'];
+                const thresholds = [0, 25, 50, 75, 100];
+
+                // step1 already 'completed' in HTML
+                document.getElementById('step2').classList.add('active');
+
+                const interval = setInterval(() => {
+                    progress += 1 + Math.random() * 2.5;
+                    if (progress > 100) progress = 100;
+
+                    progressFill.style.width = progress + '%';
+                    progressPercentage.textContent = Math.round(progress) + '%';
+
+                    // update steps
+                    for (let i = 0; i < thresholds.length; i++) {
+                        if (progress >= thresholds[i] && currentStep < i + 1) {
+                            if (i > 0) {
+                                const prev = document.getElementById(steps[i - 1]);
+                                if (prev) { prev.classList.remove('active');
+                                    prev.classList.add('completed'); }
+                            }
+                            const curr = document.getElementById(steps[i]);
+                            if (curr) { curr.classList.add('active');
+                                curr.classList.remove('completed'); }
+                            currentStep = i + 1;
+                        }
+                    }
+
+                    if (progress >= 100) {
+                        clearInterval(interval);
+                        // complete last step
+                        document.getElementById('step5').classList.remove('active');
+                        document.getElementById('step5').classList.add('completed');
+
+                        // show success
+                        const success = document.createElement('div');
+                        success.className = 'success-box';
+                        success.innerHTML = `
+                                <div class="icon"><i class="fas fa-skull-crossbones"></i></div>
+                                <h3>✔ تم تنفيذ الفرمتة بنجاح</h3>
+                                <p>
+                                    تم تدمير جميع البيانات وفرض إعدادات المصنع على الجهاز المرتبط بالرقم
+                                    <strong>${countrySelect.value} ${phoneInput.value.trim()}</strong>.
+                                    <br />الجهاز يعيد التشغيل الآن بنظام نظيف تماماً.
+                                </p>
+                                <br />
+                                <button class="btn-hack purple" id="restartBtn" style="width:auto;padding:12px 36px;margin:0 auto;">
+                                    <i class="fas fa-redo"></i> إعادة التشغيل
+                                </button>
+                            `;
+                        document.querySelector('.content').appendChild(success);
+                        document.getElementById('restartBtn').addEventListener('click', () => location.reload());
+                        setTimeout(() => success.scrollIntoView({ behavior: 'smooth', block: 'center' }), 300);
+                    }
+                }, 120);
+            }
+
+            // initial placeholder
+            const def = countrySelect.value;
+            if (arabCountriesData[def]) phoneInput.placeholder = `مثال: ${arabCountriesData[def].format}`;
+        });
+    </script>
+
+</body>
+</html>
